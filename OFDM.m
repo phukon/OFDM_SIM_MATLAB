@@ -27,13 +27,13 @@ save_file = 0;
 mod_methods = {'BPSK', 'QPSK', '8PSK', '16QAM', '32QAM', '64QAM'};
 mod_order = find(ismember(mod_methods, mod_method));
 
-%----------------------------------------------
+
 %% Input data to binary stream
-im = imread('mypic.bmp');
+im = imread('pic1.bmp');
 im_bin = dec2bin(im(:))';
 im_bin = im_bin(:);
 
-%----------------------------------------------
+
 % Binary stream to symbol
 % Parse binary stream into mod_order bit symbols
 % Pads input signal to appropriate length
@@ -43,7 +43,7 @@ im_bin_padded = [im_bin; padding];
 cons_data = reshape(im_bin_padded, mod_order, length(im_bin_padded)/mod_order)';
 cons_sym_id = bin2dec(cons_data);
 
-%-----------------------------------------------
+
 %% Symbol modulation
 % BPSK
 if mod_order ==1
@@ -84,7 +84,7 @@ end
 % Modulate data according to symbol_book
 X = symbol_book(cons_sym_id + 1);
 
-%--------------------------------------------------
+
 %% Use IFFT to move to time domain
 % Pad input signal to appropriate length
 fft_rem = mod(n_fft-mod(length(X), n_fft), n_fft);
@@ -108,13 +108,13 @@ x_s_noise = x_s + noise;
 %Measure SNR
 snr_meas = 10*log10(mean(abs(x_s.^2))/mean(abs(noise.^2)));
 
-%-------------------------------
+
 %% Apply fading channel
 g = exp(-(0:n_taps-1));
 g = g/norm(g);
 x_s_noise_fading = conv(x_s_noise, g, 'same');
 
-%-------------------------------
+
 %% Use FFT to move to frequency domain
 % Remove cyclic prefix extension and shift from serial to parallel
 x_p = reshape(x_s_noise_fading, n_fft + n_cpe, length(x_s_noise_fading)/(n_fft + n_cpe));
@@ -123,7 +123,7 @@ x_p_cpr = x_p(n_cpe +1: end,:);
 % Move to frequency domain
 X_hat_blocks = fft(x_p_cpr);
 
-%-------------------------------
+
 %%Estimate channel
 if n_taps > 1
 	switch(ch_est_method)
@@ -153,7 +153,7 @@ rec_im = reshape(rec_im_bin,8,numel(rec_im_bin)/8);
 rec_im = uint8(bin2dec(rec_im'));
 rec_im = reshape(rec_im,size(im));
 
-%----------------------------
+
 %% Generate plots
 % Transmit constellation
 subplot(2,2,1);
