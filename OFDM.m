@@ -29,7 +29,7 @@ mod_order = find(ismember(mod_methods, mod_method));
 
 
 %% Input data to binary stream
-im = imread('mypic.bmp');
+im = imread('pic1.bmp');
 im_bin = dec2bin(im(:))'; %The column stores the value of the N-bit blocks of data
 im_bin = im_bin(:); %Turned it into a binary stream. Data stored in a row now.
 
