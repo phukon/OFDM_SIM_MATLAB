@@ -29,17 +29,17 @@ mod_order = find(ismember(mod_methods, mod_method));
 
 
 %% Input data to binary stream
-im = imread('pic1.bmp');
-im_bin = dec2bin(im(:))';
-im_bin = im_bin(:);
+im = imread('mypic.bmp');
+im_bin = dec2bin(im(:))'; %The column stores the value of the N-bit blocks of data
+im_bin = im_bin(:); %Turned it into a binary stream. Data stored in a row now.
 
 
 % Binary stream to symbol
 % Parse binary stream into mod_order bit symbols
 % Pads input signal to appropriate length
-sym_rem = mod(mod_order-mod(length(im_bin), mod_order), mod_order);
+sym_rem = mod(mod_order-mod(length(im_bin), mod_order), mod_order); %remaining symbols?/symbol places empty?
 padding = repmat('0', sym_rem, 1);
-im_bin_padded = [im_bin; padding];
+im_bin_padded = [im_bin; padding]; %symbol added in the image matrix
 cons_data = reshape(im_bin_padded, mod_order, length(im_bin_padded)/mod_order)';
 cons_sym_id = bin2dec(cons_data);
 
