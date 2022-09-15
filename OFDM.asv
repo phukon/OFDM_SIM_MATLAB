@@ -31,11 +31,11 @@ mod_order = find(ismember(mod_methods, mod_method));
 %% Input data to binary stream
 im = imread('mypic1.bmp');
 im_bin = dec2bin(im(:))';
-% Each element in the column in represented in binary, hence the matrix is of order mXn. After which it is transposed, so each column represents the
-% original data in binary. And the data is read like a book, from left to
-% right.
+% Each element in the column in represented in binary, hence the matrix is
+% of order mXn. After which it is transposed, so each column represents the
+% original data in binary. An
 %The column stores the value of the N-bit blocks of data
-im_bin = im_bin(:); %Packed into a column. It's a waterfall stream now! Now a train of bits represent the data
+im_bin = im_bin(:); %Packed into a column. It's a waterfall stream now!
 
 
 % Binary stream to symbol
